@@ -18,12 +18,13 @@ void	exit_func(void)
 	exit(1);
 }
 
-t_stack	*new_elem(int n)
+t_stack	*new_elem(int n, t_stack *prev)
 {
 	t_stack *new;
 
 	new = ft_memalloc(sizeof(t_stack));
 	new->v = n;
+	new->prev = prev;
 	return (new);
 }
 
@@ -32,7 +33,7 @@ void	add_elem(t_stack **a, int n)
 	t_stack *tmp;
 
 	if (!*a)
-		*a = new_elem(n);
+		*a = new_elem(n, NULL);
 	else
 	{
 		tmp = *a;
@@ -44,28 +45,35 @@ void	add_elem(t_stack **a, int n)
 		}
 		if (tmp->v == n)
 			exit_func();
-		tmp->next = new_elem(n);
+		tmp->next = new_elem(n, tmp);
 	}
 }
 
 int		get_num(char **s)
 {
-	int n;
+	long	n;
+	int		sign;
 
 	n = 0;
+	sign = **s == '-' ? -1 : 1;
+	*s += **s == '+' || **s == '-' ? 1 : 0;
 	while (ft_isdigit(**s))
 	{
 		n = n * 10 + **s - '0';
+		if ((n > INT_MAX && sign) || (n < INT_MIN && sign < 0))
+			exit_func();
 		*s += 1;
 	}
-	return (n);
+	if ((**s && !ft_isspace(**s)) || !ft_isdigit((*s)[-1]))
+		exit_func();
+	return (n * sign);
 }
 
 void	manage_arg(t_stack **a, char *s)
 {
 	while (*s)
 	{
-		if (!ft_isdigit(*s))
+		if (!ft_isdigit(*s) && *s != '+' && *s != '-')
 		{
 			if (!ft_isspace(*s))
 				exit_func();
@@ -99,6 +107,7 @@ int		main(int ac, char *av[])
 
 	get_data(&a, ac, av);
 	t_stack *tmp;
+	tmp = a;
 	while (tmp)
 	{
 		ft_printf("%d\n", tmp->v);
