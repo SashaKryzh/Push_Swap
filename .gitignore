@@ -1,2 +1,4 @@
 *.o
 */checker
+.vscode
+.DS_Store
