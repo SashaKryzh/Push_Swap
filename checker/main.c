@@ -24,6 +24,7 @@ t_stack	*new_elem(int n)
 
 	new = ft_memalloc(sizeof(t_stack));
 	new->v = n;
+	return (new);
 }
 
 void	add_elem(t_stack **a, int n)
@@ -36,7 +37,13 @@ void	add_elem(t_stack **a, int n)
 	{
 		tmp = *a;
 		while (tmp->next)
+		{
+			if (tmp->v == n)
+				exit_func();
 			tmp = tmp->next;
+		}
+		if (tmp->v == n)
+			exit_func();
 		tmp->next = new_elem(n);
 	}
 }
@@ -56,7 +63,6 @@ int		get_num(char **s)
 
 void	manage_arg(t_stack **a, char *s)
 {
-	
 	while (*s)
 	{
 		if (!ft_isdigit(*s))
@@ -82,7 +88,7 @@ void	get_data(t_stack **a, int ac, char *av[])
 	*a = NULL;
 	while (i < ac)
 	{
-		magane_arg(a, av[i]);
+		manage_arg(a, av[i]);
 		i++;
 	}
 }
@@ -92,5 +98,11 @@ int		main(int ac, char *av[])
 	t_stack	*a;
 
 	get_data(&a, ac, av);
+	t_stack *tmp;
+	while (tmp)
+	{
+		ft_printf("%d\n", tmp->v);
+		tmp = tmp->next;
+	}
 	return (0);
 }
