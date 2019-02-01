@@ -192,9 +192,65 @@ void	p_op(t_stack **to, t_stack **from)
 	*to = elem;
 }
 
+void	r_op(t_stack **top)
+{
+	t_stack	*tmp;
+	t_stack	*shift;
+
+	if (!*top || !(*top)->next)
+		return ;
+	shift = *top;
+	*top = (*top)->next;
+	tmp = *top;
+	while (tmp->next)
+		tmp = tmp->next;
+	tmp->next = shift;
+}
+
+void	rr_op(t_stack **top)
+{
+	t_stack *tmp;
+	t_stack	*shift;
+
+	if (!*top || !(*top)->next)
+		return ;
+	tmp = (*top);
+	while (tmp->next->next)
+		tmp = tmp->next;
+	shift = tmp->next;
+	tmp->next = NULL;
+	shift->next = *top;
+	*top = shift;
+}
+
+void	dump_stacks(t_stack *a, t_stack *b, char *op)
+{
+	if (op)
+		ft_printf("Exec %s\n", op);
+	else
+		ft_putstr("Initial state\n");
+	while (a || b)
+	{
+		if (a)
+			ft_printf("%3d", a->v);
+		if (b)
+			ft_printf("%*d", a ? 4 : 7, b->v);
+		a = a ? a->next : a;
+		b = b ? b->next : b;
+		write(1, "\n", 1);
+	}
+	ft_putstr("___ ___\n a   b \n\n");
+}
+
 void	check_rr(t_stack **a, t_stack **b, t_instr *op)
 {
-	return ;
+	if (op->op[2] != 'r')
+		rr_op(op->op[2] == 'a' ? a : b);
+	else
+	{
+		rr_op(a);
+		rr_op(b);
+	}
 }
 
 void	execute(t_stack **a, t_stack **b, t_instr *op)
@@ -207,21 +263,27 @@ void	execute(t_stack **a, t_stack **b, t_instr *op)
 		else if (op->op[0] == 'p')
 			p_op(op->op[1] == 'a' ? a : b, op->op[1] == 'a' ? b : a);
 		else if (op->op[0] == 'r' && op->op[1] != 'r')
-			break ;// r_op(op->op[1] == 'a' ? a : b);
+			r_op(op->op[1] == 'a' ? a : b);
 		else if (op->op[0] == 's' && op->op[1] == 's')
 		{
 			s_op(a);
 			s_op(b);
 		}
-		else if (op->op[0] == 'r' && op->op[1] == 'r')
+		else if (op->op[0] == 'r' && op->op[1] == 'r' && op->op[2] == '\0')
 		{
-			break ;// r_op(a);
-			// r_op(b);
+			r_op(a);
+			r_op(b);
 		}
 		else
 			check_rr(a, b, op);
+		dump_stacks(*a, *b, op->op);
 		op = op->next;
 	}
+}
+
+void	check_res(t_stack *a, t_stack *b)
+{
+	
 }
 
 int		main(int ac, char *av[])
@@ -232,23 +294,9 @@ int		main(int ac, char *av[])
 
 	get_data(&a, ac, av);
 	get_commands(&lst);
-	ft_printf("\n");
-	t_stack *tmp;
-	t_instr *tmp2;
-	tmp = a;
-	tmp2 = lst;
-	while (tmp)
-	{
-		ft_printf("%d\n", tmp->v);
-		tmp = tmp->next;
-	}
-	ft_printf("\n");
-	while (tmp2)
-	{
-		ft_printf("%s\n", tmp2->op);
-		tmp2 = tmp2->next;
-	}
+	dump_stacks(a, NULL, NULL);
 	execute(&a, &b, lst);
+	check_res(a, b);
 	system("leaks checker");
 	return (0);
 }
