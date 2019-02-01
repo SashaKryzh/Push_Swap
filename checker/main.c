@@ -201,6 +201,7 @@ void	r_op(t_stack **top)
 		return ;
 	shift = *top;
 	*top = (*top)->next;
+	shift->next = NULL;
 	tmp = *top;
 	while (tmp->next)
 		tmp = tmp->next;
@@ -283,7 +284,30 @@ void	execute(t_stack **a, t_stack **b, t_instr *op)
 
 void	check_res(t_stack *a, t_stack *b)
 {
-	
+	int check;
+
+	if (b)
+	{
+		ft_putstr("KO\n");
+		exit(0);
+	}
+	if (!a->next)
+	{
+		ft_putstr("OK\n");
+		exit(0);
+	}
+	check = a->v > a->next->v;
+	while (a->next)
+	{
+		if (a->v > a->next->v != check)
+		{
+			ft_putstr("KO\n");
+			exit(1);
+		}
+		a = a->next;
+	}
+	ft_putstr("OK\n");
+	exit(0);
 }
 
 int		main(int ac, char *av[])
