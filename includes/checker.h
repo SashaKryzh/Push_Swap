@@ -22,4 +22,27 @@ typedef struct	s_stack
 	struct s_stack	*prev;
 }				t_stack;
 
+enum			e_op
+{
+	sa,
+	sb,
+	ss,
+	pa,
+	pb,
+	ra,
+	rb,
+	rr,
+	rra,
+	rrb,
+	rrr
+}				op;
+
+typedef struct	s_instr
+{
+	enum e_op		op;
+	struct s_instr	*next;
+}				t_instr;
+
+
+
 #endif
