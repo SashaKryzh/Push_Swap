@@ -101,61 +101,34 @@ void	get_data(t_stack **a, int ac, char *av[])
 	}
 }
 
-int		get_next_command(char *s)
-{
-	char	trash[10000];
-	int		i;
-
-	i = 0;
-	while (read(0, &s[i], 1) && i < 4)
-	{
-		if (s[i] == '\n')
-		{
-			if (!i)
-				exit_func();
-			s[i] = '\0';
-			return (1);
-		}
-		i++;
-	}
-	if (i > 0)
-	{
-		read(0, &trash, 10000);
-		exit_func();
-	}
-	return (0);
-}
-
-int		check_op(char *s)
+void	check_op(char *s)
 {
 	if (ft_strequ(s, "sa"))
-		return (sa);
+		return ;
 	if (ft_strequ(s, "sb"))
-		return (sb);
+		return ;
 	if (ft_strequ(s, "ss"))
-		return (ss);
+		return ;
 	if (ft_strequ(s, "pa"))
-		return (pa);
+		return ;
 	if (ft_strequ(s, "pb"))
-		return (pb);
+		return ;
 	if (ft_strequ(s, "ra"))
-		return (ra);
+		return ;
 	if (ft_strequ(s, "rb"))
-		return (rb);
+		return ;
 	if (ft_strequ(s, "rr"))
-		return (rr);
+		return ;
 	if (ft_strequ(s, "rra"))
-		return (rra);
+		return ;
 	if (ft_strequ(s, "rrb"))
-		return (rrb);
+		return ;
 	if (ft_strequ(s, "rrr"))
-		return (rrr);
-	else
-		exit_func();
-	return (-1);
+		return ;
+	exit_func();
 }
 
-t_instr	*new_instr(int op)
+t_instr	*new_instr(char *op)
 {
 	t_instr *new;
 
@@ -164,7 +137,7 @@ t_instr	*new_instr(int op)
 	return (new);
 }
 
-void	add_op(t_instr **lst, int op)
+void	add_op(t_instr **lst, char *op)
 {
 	t_instr *tmp;
 
@@ -181,14 +154,16 @@ void	add_op(t_instr **lst, int op)
 
 void	get_commands(t_instr **lst)
 {
-	char	s[4];
-	int		op;
+	char	*s;
+	int		ret;
 
 	*lst = NULL;
-	while (get_next_command((char *)&s))
+	while ((ret = get_next_line(0, &s)) > 0)
 	{
-		op = check_op((char *)&s);
-		add_op(lst, op);
+		if (ret != 2)
+			exit_func();
+		check_op(s);
+		add_op(lst, s);
 	}
 }
 
@@ -212,7 +187,7 @@ int		main(int ac, char *av[])
 	ft_printf("\n");
 	while (tmp2)
 	{
-		ft_printf("%d\n", tmp2->op);
+		ft_printf("%s\n", tmp2->op);
 		tmp2 = tmp2->next;
 	}
 	return (0);
