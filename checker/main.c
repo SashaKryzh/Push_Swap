@@ -15,6 +15,7 @@
 void	exit_func(void)
 {
 	ft_putstr("Error\n");
+	system("leaks checker");
 	exit(1);
 }
 
@@ -167,9 +168,66 @@ void	get_commands(t_instr **lst)
 	}
 }
 
+void	s_op(t_stack **top)
+{
+	t_stack *second;
+
+	if (!*top || !(*top)->next)
+		return ;
+	second = (*top)->next;
+	(*top)->next = second->next;
+	second->next = (*top);
+	*top = second;
+}
+
+void	p_op(t_stack **to, t_stack **from)
+{
+	t_stack *elem;
+
+	if (!*from)
+		return ;
+	elem = *from;
+	*from = (*from)->next;
+	elem->next = *to;
+	*to = elem;
+}
+
+void	check_rr(t_stack **a, t_stack **b, t_instr *op)
+{
+	return ;
+}
+
+void	execute(t_stack **a, t_stack **b, t_instr *op)
+{
+	*b = NULL;
+	while (op)
+	{
+		if (op->op[0] == 's' && op->op[1] != 's')
+			s_op(op->op[1] == 'a' ? a : b);
+		else if (op->op[0] == 'p')
+			p_op(op->op[1] == 'a' ? a : b, op->op[1] == 'a' ? b : a);
+		else if (op->op[0] == 'r' && op->op[1] != 'r')
+			break ;// r_op(op->op[1] == 'a' ? a : b);
+		else if (op->op[0] == 's' && op->op[1] == 's')
+		{
+			s_op(a);
+			s_op(b);
+		}
+		else if (op->op[0] == 'r' && op->op[1] == 'r')
+		{
+			break ;// r_op(a);
+			// r_op(b);
+		}
+		else
+			check_rr(a, b, op);
+		op = op->next;
+	}
+}
+
 int		main(int ac, char *av[])
 {
 	t_stack	*a;
+	t_stack *b;
 	t_instr	*lst;
 
 	get_data(&a, ac, av);
@@ -190,5 +248,7 @@ int		main(int ac, char *av[])
 		ft_printf("%s\n", tmp2->op);
 		tmp2 = tmp2->next;
 	}
+	execute(&a, &b, lst);
+	system("leaks checker");
 	return (0);
 }
