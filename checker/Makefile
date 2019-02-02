@@ -22,7 +22,11 @@ LIBFT = $(addprefix $(LIB_D)/, libft.a)
 
 INCLS = -I $(LIB_HEAD) -I ../includes
 
-SRCS = main.c
+SRCS =	main.c \
+		get_data.c \
+		get_commands.c \
+		execute.c \
+		operations.c
 
 OBJS_D = ./objs
 OBJS = $(addprefix $(OBJS_D)/, $(SRCS:.c=.o))
