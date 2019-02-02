@@ -28,4 +28,33 @@ typedef struct	s_instr
 	struct s_instr	*next;
 }				t_instr;
 
+/*
+**	Main
+*/
+
+void			get_data(t_stack **a, int ac, char *av[]);
+void			get_commands(t_instr **lst);
+void			execute(t_stack **a, t_stack **b, t_instr *op);
+
+/*
+**	Operations
+*/
+
+void			s_op(t_stack **top);
+void			p_op(t_stack **to, t_stack **from);
+void			r_op(t_stack **top);
+void			rr_op(t_stack **top);
+
+/*
+**	Utils
+*/
+
+void			exit_func(void);
+
+/*
+**	Tests
+*/
+
+void			dump_stacks(t_stack *a, t_stack *b, char *op);
+
 #endif
