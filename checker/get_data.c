@@ -54,7 +54,7 @@ int		get_num(char **s)
 	while (ft_isdigit(**s))
 	{
 		n = n * 10 + **s - '0';
-		if ((n > INT_MAX && sign) || n > ft_abs(INT_MIN))
+		if ((n > INT_MAX && sign > 0) || n > ft_abs(INT_MIN))
 			exit_func();
 		*s += 1;
 	}

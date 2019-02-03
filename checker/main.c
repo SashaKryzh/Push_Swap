@@ -46,7 +46,7 @@ int		main(int ac, char *av[])
 
 	get_data(&a, ac, av);
 	get_commands(&lst);
-	dump_stacks(a, NULL, NULL);
+	dump_stacks(a, NULL, NULL); //
 	execute(&a, &b, lst);
 	check_res(a, b);
 	return (0);
