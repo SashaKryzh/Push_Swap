@@ -1,22 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: okryzhan <okryzhan@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/31 18:10:59 by okryzhan          #+#    #+#             */
-/*   Updated: 2019/01/31 18:10:59 by okryzhan         ###   ########.fr       */
+/*   Created: 2019/02/03 11:53:55 by okryzhan          #+#    #+#             */
+/*   Updated: 2019/02/03 11:53:55 by okryzhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "push_swap.h"
+#ifndef PUSH_SWAP_PUSH_SWAP_H
+# define PUSH_SWAP_PUSH_SWAP_H
 
-int		main(int ac, char *av[])
-{
-	t_stack	*a;
-	t_stack *b;
+# include "checker.h"
 
-	get_data(&a, ac, av);
-	return (0);
-}
+#endif
