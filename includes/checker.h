@@ -35,6 +35,7 @@ typedef struct	s_instr
 void			get_data(t_stack **a, int ac, char *av[]);
 void			get_commands(t_instr **lst);
 void			execute(t_stack **a, t_stack **b, t_instr *op);
+void			check_res(t_stack *a, t_stack *b);
 
 /*
 **	Operations

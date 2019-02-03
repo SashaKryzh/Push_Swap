@@ -26,6 +26,7 @@ SRCS =	main.c \
 		get_data.c \
 		get_commands.c \
 		execute.c \
+		check_res.c \
 		operations.c
 
 OBJS_D = ./objs

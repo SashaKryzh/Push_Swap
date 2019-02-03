@@ -15,7 +15,7 @@
 void	exit_func(void)
 {
 	ft_putstr("Error\n");
-	system("leaks checker");
+	system("leaks checker"); //
 	exit(1);
 }
 
@@ -38,34 +38,6 @@ void	dump_stacks(t_stack *a, t_stack *b, char *op)
 	ft_putstr("___ ___\n a   b \n\n");
 }
 
-void	check_res(t_stack *a, t_stack *b)
-{
-	int check;
-
-	if (b)
-	{
-		ft_putstr("KO\n");
-		exit(0);
-	}
-	if (!a->next)
-	{
-		ft_putstr("OK\n");
-		exit(0);
-	}
-	check = a->v > a->next->v;
-	while (a->next)
-	{
-		if (a->v > a->next->v != check)
-		{
-			ft_putstr("KO\n");
-			exit(1);
-		}
-		a = a->next;
-	}
-	ft_putstr("OK\n");
-	exit(0);
-}
-
 int		main(int ac, char *av[])
 {
 	t_stack	*a;
@@ -77,6 +49,5 @@ int		main(int ac, char *av[])
 	dump_stacks(a, NULL, NULL);
 	execute(&a, &b, lst);
 	check_res(a, b);
-	system("leaks checker");
 	return (0);
 }
