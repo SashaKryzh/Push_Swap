@@ -27,7 +27,8 @@ SRCS =	main.c \
 		utils.c \
 		is_sorted.c \
 		get_data.c \
-		operations.c
+		operations.c \
+		tests.c
 
 OBJS_D = ./objs
 OBJS = $(addprefix $(OBJS_D)/, $(SRCS:.c=.o))

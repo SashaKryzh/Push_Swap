@@ -48,32 +48,12 @@ void	qisort(t_stack **a, t_stack **b)
 	}
 }
 
-void	dump_stacks(t_stack *a, t_stack *b)
-{
-	while (a || b)
-	{
-		if (a)
-			ft_printf("%10d", a->v);
-		if (b)
-		{
-			ft_printf("%*d", a ? 15 : 25, b->v);
-		}
-		write(1, "\n", 1);
-		a = a ? a->next : a;
-		b = b ? b->next : b;
-	}
-	ft_printf("----------     ----------\n");
-	ft_printf("--------           b\n");
-}
-
 int		main(int ac, char *av[])
 {
 	t_stack	*a;
 	t_stack *b;
 
 	get_data(&a, ac, av);
-	p_op(&b, &a);
-	dump_stacks(a, b);
 	if (is_sorted(a) != ASC)
 	{
 		b = NULL;

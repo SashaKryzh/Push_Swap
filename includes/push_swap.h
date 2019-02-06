@@ -15,6 +15,18 @@
 
 # include "ps.h"
 
+# define ASC 1
+# define DES 0
+# define UNS -1
+
 int		is_sorted(t_stack *s);
+int		get_medium(t_stack *s);
+int		cnt_ints(t_stack *s);
+
+/*
+**	Tests
+*/
+
+void	dump_stacks(t_stack *a, t_stack *b);
 
 #endif
