@@ -22,6 +22,8 @@ LIBFT = $(addprefix $(LIB_D)/, libft.a)
 
 INCLS = -I $(LIB_HEAD) -I ../includes
 
+VPATH = ../ps_srcs
+
 SRCS =	main.c \
 		get_data.c \
 		get_commands.c \
@@ -41,7 +43,7 @@ $(OBJS_D):
 	@mkdir -p $(OBJS_D)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(SRCS) $(LIB_SRCS) $(INCLS)
+	$(CC) -o $(NAME) $(OBJS) $(LIB_SRCS) $(INCLS)
 
 $(OBJS_D)/%.o: %.c ../includes/*.h ../libft/includes/*.h
 	$(CC) -o $@ -c $< $(INCLS)

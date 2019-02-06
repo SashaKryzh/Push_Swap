@@ -22,9 +22,11 @@ LIBFT = $(addprefix $(LIB_D)/, libft.a)
 
 INCLS = -I $(LIB_HEAD) -I ../includes
 
+VPATH = ../ps_srcs
 SRCS =	main.c \
-		../checker/get_data.c \
-		../checker/operations.c
+		is_sorted.c \
+		get_data.c \
+		operations.c
 
 OBJS_D = ./objs
 OBJS = $(addprefix $(OBJS_D)/, $(SRCS:.c=.o))
@@ -34,11 +36,11 @@ all: $(OBJS_D) $(LIBFT) $(NAME)
 $(LIBFT):
 	@$(MAKE) all -C $(LIB_D)
 
-$(OBJS_D): 
+$(OBJS_D):
 	@mkdir -p $(OBJS_D)
 
 $(NAME): $(OBJS)
-	$(CC) -o $(NAME) $(SRCS) $(LIB_SRCS) $(INCLS)
+	$(CC) -o $(NAME) $(OBJS) $(LIB_SRCS) $(INCLS)
 
 $(OBJS_D)/%.o: %.c ../includes/*.h ../libft/includes/*.h
 	$(CC) -o $@ -c $< $(INCLS)

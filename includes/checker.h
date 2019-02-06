@@ -13,14 +13,7 @@
 #ifndef PUSH_SWAP_CHECKER_H
 # define PUSH_SWAP_CHECKER_H
 
-# include "libft.h"
-
-typedef struct	s_stack
-{
-	int				v;
-	struct s_stack	*next;
-	struct s_stack	*prev;
-}				t_stack;
+# include "ps.h"
 
 typedef struct	s_instr
 {
@@ -32,19 +25,9 @@ typedef struct	s_instr
 **	Main
 */
 
-void			get_data(t_stack **a, int ac, char *av[]);
 void			get_commands(t_instr **lst);
 void			execute(t_stack **a, t_stack **b, t_instr *op);
 void			check_res(t_stack *a, t_stack *b);
-
-/*
-**	Operations
-*/
-
-void			s_op(t_stack **top);
-void			p_op(t_stack **to, t_stack **from);
-void			r_op(t_stack **top);
-void			rr_op(t_stack **top);
 
 /*
 **	Utils
