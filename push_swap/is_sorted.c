@@ -19,13 +19,11 @@ int		is_sorted(t_stack *s)
 	if (!s->next)
 		return (1);
 	check = s->next->v > s->v;
-	if (!check)
-		return (0);
 	while (s->next)
 	{
-		if (s->v > s->next->v != check)
-			return (0);
+		if (s->next->v > s->v != check)
+			return (UNS);
 		s = s->next;
 	}
-	return (1);
+	return (check);
 }

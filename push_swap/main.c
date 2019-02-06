@@ -19,27 +19,51 @@ void	exit_func(void)
 	exit(1);
 }
 
-int		get_medium(t_stack *s)
+void	check_ints(t_stack **s, int acs)
 {
-	int max;
-	int min;
-
-	min = INT_MAX;
-	max = INT_MIN;
-	while (s)
-	{
-		min = s->v < min ? s->v : min;
-		max = s->v > max ? s->v : max;
-		s = s->next;
-	}
-	return ((min + max) / 2);
+	if ((*s)->next->v > (*s)->v == acs)
+		s_op(s);
+	else if (!acs)
+		s_op(s);
 }
 
-void	sort(t_stack **a, t_stack **b)
+void	qisort(t_stack **a, t_stack **b)
 {
-	int m;
+	int		med;
+	int		cnt;
 
-	m = get_medium(*a);
+	med = get_medium(*a);
+	// ft_printf("medium : %d\n", m); //
+	cnt = cnt_ints(*a);
+	if (cnt == 2)
+		check_ints(a, ASC);
+	while (cnt > 0)
+	{
+		if ((*a)->v < med)
+		{
+			p_op(b, a);
+			cnt--;
+		}
+		cnt--;
+	}
+}
+
+void	dump_stacks(t_stack *a, t_stack *b)
+{
+	while (a || b)
+	{
+		if (a)
+			ft_printf("%10d", a->v);
+		if (b)
+		{
+			ft_printf("%*d", a ? 15 : 25, b->v);
+		}
+		write(1, "\n", 1);
+		a = a ? a->next : a;
+		b = b ? b->next : b;
+	}
+	ft_printf("----------     ----------\n");
+	ft_printf("--------           b\n");
 }
 
 int		main(int ac, char *av[])
@@ -48,10 +72,12 @@ int		main(int ac, char *av[])
 	t_stack *b;
 
 	get_data(&a, ac, av);
-	if (!is_sorted(a))
+	p_op(&b, &a);
+	dump_stacks(a, b);
+	if (is_sorted(a) != ASC)
 	{
 		b = NULL;
-		sort(&a, &b);
+		qisort(&a, &b);
 	}
 	return (0);
 }

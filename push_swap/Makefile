@@ -24,6 +24,7 @@ INCLS = -I $(LIB_HEAD) -I ../includes
 
 VPATH = ../ps_srcs
 SRCS =	main.c \
+		utils.c \
 		is_sorted.c \
 		get_data.c \
 		operations.c
